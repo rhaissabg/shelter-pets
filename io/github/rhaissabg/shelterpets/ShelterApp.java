@@ -29,6 +29,8 @@ public class ShelterApp {
 			sc.nextLine();
 			String breed = sc.nextLine();
 			reader.close();
+			Animal animal = new Animal(name, type, sex, adress, age, weight, breed);
+			System.out.println(animal);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
