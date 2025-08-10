@@ -33,6 +33,8 @@ public class ShelterApp {
 			switch (option) {
 			case 1:
 				try {
+					
+					
 					Scanner reader = new Scanner(file);
 					String question = reader.nextLine();
 					boolean validName = false;
@@ -59,6 +61,34 @@ public class ShelterApp {
 							System.out.println();
 						}
 					}
+					
+					
+					boolean validType = false;
+					question = reader.nextLine();
+					while (!validType) {
+						try {
+							System.out.print(question + " ");
+							String type = sc.nextLine();
+							AnimalType typeEnum = AnimalType.valueOf(type.toUpperCase());
+							validType = true;
+						} catch (IllegalArgumentException e) {
+							System.out.println("\nPlease, enter a valid type: dog or cat.\n");
+						}
+					}
+					
+					boolean validGender = false;
+					question = reader.nextLine();
+					while (!validGender) {
+						try {
+							System.out.print(question + " ");
+							String gender = sc.nextLine();
+							AnimalGender genderEnum = AnimalGender.valueOf(gender.toUpperCase());
+							validGender = true;
+						} catch (IllegalArgumentException e) {
+							System.out.println("\nPlease, enter a valid gender: male or female.\n");
+						}
+					}
+					
 					reader.close();
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
