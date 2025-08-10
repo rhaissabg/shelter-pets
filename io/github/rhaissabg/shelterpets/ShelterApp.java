@@ -5,10 +5,15 @@ import java.io.FileNotFoundException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import io.github.rhaissabg.shelterpets.enums.AnimalGender;
+import io.github.rhaissabg.shelterpets.enums.AnimalType;
+import io.github.rhaissabg.shelterpets.services.ShelterService;
+
 public class ShelterApp {
 
 	public static void main(String[] args) {
 
+		ShelterService shelterService = new ShelterService();
 		File file = new File("src/resources/shelter_questions.txt");
 		Scanner sc = new Scanner(System.in);
 		int option = -1;
@@ -33,61 +38,46 @@ public class ShelterApp {
 			switch (option) {
 			case 1:
 				try {
-					
-					
 					Scanner reader = new Scanner(file);
+					
 					String question = reader.nextLine();
-					boolean validName = false;
-					while (!validName) {
-						System.out.print(question + " ");
-						String name = sc.nextLine();
-						String[] nameParts = name.trim().split("\\s+");
-						boolean hasNumberOrSpecialCharacter = false;
-						for (String part : nameParts) {
-							if (!part.matches("^[a-zA-Z]+$")) {
-								hasNumberOrSpecialCharacter = true;
-								break;
-							}
-						}
-						try {
-							if (nameParts.length > 1 && !hasNumberOrSpecialCharacter) {
-								validName = true;
-							} else {
-								throw new IllegalArgumentException();
-							}
-						} catch (IllegalArgumentException e) {
-							System.out.println("\nPlease, enter first and last name.\nUse with letters only, no numbers or special characters.");
-							e.printStackTrace();
-							System.out.println();
-						}
-					}
+					String name = shelterService.validateAndSaveName(question, sc);
+					System.out.println(name);
 					
-					
-					boolean validType = false;
 					question = reader.nextLine();
-					while (!validType) {
-						try {
-							System.out.print(question + " ");
-							String type = sc.nextLine();
-							AnimalType typeEnum = AnimalType.valueOf(type.toUpperCase());
-							validType = true;
-						} catch (IllegalArgumentException e) {
-							System.out.println("\nPlease, enter a valid type: dog or cat.\n");
-						}
-					}
+					AnimalType type = shelterService.validateAndSaveTypeOrGender(question, sc, AnimalType.class, "dog", "cat");
+					System.out.println(type);
 					
-					boolean validGender = false;
 					question = reader.nextLine();
-					while (!validGender) {
-						try {
-							System.out.print(question + " ");
-							String gender = sc.nextLine();
-							AnimalGender genderEnum = AnimalGender.valueOf(gender.toUpperCase());
-							validGender = true;
-						} catch (IllegalArgumentException e) {
-							System.out.println("\nPlease, enter a valid gender: male or female.\n");
-						}
-					}
+					AnimalGender gender = shelterService.validateAndSaveTypeOrGender(question, sc, AnimalGender.class, "male", "female");
+					System.out.println(gender);
+					
+					
+//					boolean validType = false;
+//					question = reader.nextLine();
+//					while (!validType) {
+//						try {
+//							System.out.print(question + " ");
+//							String type = sc.nextLine();
+//							AnimalType typeEnum = AnimalType.valueOf(type.toUpperCase());
+//							validType = true;
+//						} catch (IllegalArgumentException e) {
+//							System.out.println("\nPlease, enter a valid type: dog or cat.\n");
+//						}
+//					}
+					
+//					boolean validGender = false;
+//					question = reader.nextLine();
+//					while (!validGender) {
+//						try {
+//							System.out.print(question + " ");
+//							String gender = sc.nextLine();
+//							AnimalGender genderEnum = AnimalGender.valueOf(gender.toUpperCase());
+//							validGender = true;
+//						} catch (IllegalArgumentException e) {
+//							System.out.println("\nPlease, enter a valid gender: male or female.\n");
+//						}
+//					}
 					
 					reader.close();
 				} catch (FileNotFoundException e) {
@@ -112,47 +102,3 @@ public class ShelterApp {
 	}
 
 }
-
-//				try {
-//					Scanner reader = new Scanner(file);
-//					boolean validName = false;
-//					String name = null;
-//					String question = reader.nextLine() + " ";
-//					while (!validName) {
-//						System.out.print(question);
-//						name = sc.nextLine();
-//						String[] nameParts = name.trim().split("\\s+");
-//						boolean hasNumberOrSpecialCharacter = false;
-//						for (int i = 0; i < nameParts.length; i++) {
-//							if (!nameParts[i].matches("^[a-zA-Z\\\\s]*$")) {
-//								hasNumberOrSpecialCharacter = true;
-//								break;
-//							}
-//						}
-//						if (nameParts.length < 2 || hasNumberOrSpecialCharacter) {
-////							System.out.println("Please, enter first and last name and only letters!");
-//							throw new IllegalArgumentException("Please, enter first and last name and only letters!");
-//						} else {
-//							validName = true;
-//						}
-//					}
-//					System.out.print(reader.nextLine() + " ");
-//					String type = sc.next();
-//					System.out.print(reader.nextLine() + " ");
-//					String sex = sc.next();
-//					System.out.print(reader.nextLine() + " ");
-//					sc.nextLine();
-//					String adress = sc.nextLine();
-//					System.out.print(reader.nextLine() + " ");
-//					int age = sc.nextInt();
-//					System.out.print(reader.nextLine() + " ");
-//					double weight = sc.nextDouble();
-//					System.out.print(reader.nextLine() + " ");
-//					sc.nextLine();
-//					String breed = sc.nextLine();
-//					reader.close();
-//					Animal animal = new Animal(name, type, sex, adress, age, weight, breed);
-//					System.out.println(animal);
-//				} catch (FileNotFoundException e) {
-//					e.printStackTrace();
-//				}

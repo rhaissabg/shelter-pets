@@ -1,4 +1,4 @@
-package io.github.rhaissabg.shelterpets;
+package io.github.rhaissabg.shelterpets.enums;
 
 public enum AnimalGender {
 
